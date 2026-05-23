@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const path = require("path"); // NEW
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,10 +13,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("My Week 2 API!");
-});
-
+app.use(express.static(path.join(__dirname, "public"))); // NEW
 
 app.post("/user", (req, res) => {
   const { name, email } = req.body;
@@ -29,7 +27,7 @@ app.post("/user", (req, res) => {
 
 app.get("/user/:id", (req, res) => {
   const { id } = req.params;
-  res.json({ message: `User ${id} Profile` });
+  res.json({ message: `User ${id} profile` });
 });
 
 app.listen(PORT, () => {
